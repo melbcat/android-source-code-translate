@@ -9,7 +9,7 @@
 > **关于我，欢迎关注**  
 微博：[@onlylemi](http://weibo.com/xiaomi0623)  
 邮箱：[onlylemi.com(AT)gmail.com](mailto:onlylemi.com@gmail.com)  
-如果你想加入我们的微信交流群，请在微博上[私信](http://weibo.com/xiaomi0623)我
+如果你有其他改进意见，请在微博上[私信](http://weibo.com/xiaomi0623)我
 
 ## 翻译方式
 
