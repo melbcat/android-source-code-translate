@@ -35,36 +35,31 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * <p>AsyncTask enables proper and easy use of the UI thread. This class allows to
- * perform background operations and publish results on the UI thread without
- * having to manipulate threads and/or handlers.</p>
+ * <p>AsyncTask 可以适当而且很方便的用于 UI 线程。这个类允许执行后台操作，
+ * 并且在无需操作 threads 和 handlers 的情况下，可以在 UI 线程上进行一些操作</p>
  *
- * <p>AsyncTask is designed to be a helper class around {@link Thread} and {@link Handler}
- * and does not constitute a generic threading framework. AsyncTasks should ideally be
- * used for short operations (a few seconds at the most.) If you need to keep threads
- * running for long periods of time, it is highly recommended you use the various APIs
- * provided by the <code>java.util.concurrent</code> package such as {@link Executor},
- * {@link ThreadPoolExecutor} and {@link FutureTask}.</p>
+ * <p>AsyncTask 被设计成一个 {@link Thread} 和 {@link Handler} 的辅助类，并不构成一个通用的线程框架。
+ * AsyncTasks 应用于比较短的操作操作(最多几秒)。如果你需要保持线程长时间运行，我们强烈建议你使用
+ * <code>java.util.concurrent</code> 提供的 APIs，比如 {@link Executor}，
+ * {@link ThreadPoolExecutor} 和 {@link FutureTask}。</p>
  *
- * <p>An asynchronous task is defined by a computation that runs on a background thread and
- * whose result is published on the UI thread. An asynchronous task is defined by 3 generic
- * types, called <code>Params</code>, <code>Progress</code> and <code>Result</code>,
- * and 4 steps, called <code>onPreExecute</code>, <code>doInBackground</code>,
- * <code>onProgressUpdate</code> and <code>onPostExecute</code>.</p>
+ * <p>一个被定义的异步任务运行在后台线程，其结果会反馈到 UI 线程。一个异步任务有三种类型定义，
+ * <code>Params</code>, <code>Progress</code> 和 <code>Result</code>, 和其他的4步，
+ * <code>onPreExecute</code>, <code>doInBackground</code>, 
+ * <code>onProgressUpdate</code> and <code>onPostExecute</code></p>
  *
  * <div class="special reference">
- * <h3>Developer Guides</h3>
- * <p>For more information about using tasks and threads, read the
+ * <h3>开发指南</h3>
+ * <p>对于更多使用任务和线程的信息，请阅读开发指南
  * <a href="{@docRoot}guide/topics/fundamentals/processes-and-threads.html">Processes and
- * Threads</a> developer guide.</p>
+ * Threads</a>部分。</p>
  * </div>
  *
- * <h2>Usage</h2>
- * <p>AsyncTask must be subclassed to be used. The subclass will override at least
- * one method ({@link #doInBackground}), and most often will override a
- * second one ({@link #onPostExecute}.)</p>
+ * <h2>用法</h2>
+ * <p>AsyncTask 必须被子类继承以后才可以使用. 子类至少要重写 ({@link #doInBackground}) 方法, 
+ * 通常也需要重写 ({@link #onPostExecute})方法。</p>
  *
- * <p>Here is an example of subclassing:</p>
+ * <p>这是一个子类化的例子:</p>
  * <pre class="prettyprint">
  * private class DownloadFilesTask extends AsyncTask&lt;URL, Integer, Long&gt; {
  *     protected Long doInBackground(URL... urls) {
@@ -89,93 +84,69 @@ import java.util.concurrent.atomic.AtomicInteger;
  * }
  * </pre>
  *
- * <p>Once created, a task is executed very simply:</p>
+ * <p>一旦创建，一个任务被执行:</p>
  * <pre class="prettyprint">
  * new DownloadFilesTask().execute(url1, url2, url3);
  * </pre>
  *
- * <h2>AsyncTask's generic types</h2>
- * <p>The three types used by an asynchronous task are the following:</p>
+ * <h2>AsyncTask 的属性</h2>
+ * <p>被一个异步任务所使用的三种类型如下:</p>
  * <ol>
- *     <li><code>Params</code>, the type of the parameters sent to the task upon
- *     execution.</li>
- *     <li><code>Progress</code>, the type of the progress units published during
- *     the background computation.</li>
- *     <li><code>Result</code>, the type of the result of the background
- *     computation.</li>
+ *     <li><code>Params</code>, 发送给要执行任务的参数类型.</li>
+ *     <li><code>Progress</code>, 在后台运行期间发布的进度类型.</li>
+ *     <li><code>Result</code>, 后台执行结果的类型.</li>
  * </ol>
- * <p>Not all types are always used by an asynchronous task. To mark a type as unused,
- * simply use the type {@link Void}:</p>
+ * <p>一个异步任务不总是需要所有的参数类型， 如果类型没有被使用，可以以将它设置为 {@link Void}:</p>
  * <pre>
  * private class MyTask extends AsyncTask&lt;Void, Void, Void&gt; { ... }
  * </pre>
  *
- * <h2>The 4 steps</h2>
- * <p>When an asynchronous task is executed, the task goes through 4 steps:</p>
+ * <h2>4步</h2>
+ * <p>当一个异步任务被执行的时候，会经历以下4步:</p>
  * <ol>
- *     <li>{@link #onPreExecute()}, invoked on the UI thread before the task
- *     is executed. This step is normally used to setup the task, for instance by
- *     showing a progress bar in the user interface.</li>
- *     <li>{@link #doInBackground}, invoked on the background thread
- *     immediately after {@link #onPreExecute()} finishes executing. This step is used
- *     to perform background computation that can take a long time. The parameters
- *     of the asynchronous task are passed to this step. The result of the computation must
- *     be returned by this step and will be passed back to the last step. This step
- *     can also use {@link #publishProgress} to publish one or more units
- *     of progress. These values are published on the UI thread, in the
- *     {@link #onProgressUpdate} step.</li>
- *     <li>{@link #onProgressUpdate}, invoked on the UI thread after a
- *     call to {@link #publishProgress}. The timing of the execution is
- *     undefined. This method is used to display any form of progress in the user
- *     interface while the background computation is still executing. For instance,
- *     it can be used to animate a progress bar or show logs in a text field.</li>
- *     <li>{@link #onPostExecute}, invoked on the UI thread after the background
- *     computation finishes. The result of the background computation is passed to
- *     this step as a parameter.</li>
+ *     <li>{@link #onPreExecute()}, 在任务执行之前在 UI 线程中被调用。这一步通常被用来对任务进行设置，
+ *     比如在用户界面上显示一个进度条。</li>
+ *     <li>{@link #doInBackground}, 在 {@link #onPreExecute()} 方法执行完成之后立即被后台线程调用。
+ *     这一步是用来执行后台的耗时操作。异步任务的参数被传递到这一步。执行的结果也在这一步返回传递到最后一步。
+ *     这一步也可以使用 {@link #publishProgress} 来发布一个或多个进度单位。这些值将被发布到 UI 线程的
+ *     {@link #onProgressUpdate} 这一步。</li>
+ *     <li>{@link #onProgressUpdate}, {@link #publishProgress} 被调用后，该方法被UI线程调用。
+ *     执行的时间是不确定的。这个方法是用来当后台操作仍然在执行时更新用户界面的进度条。
+ *     举个例子，它可以用来更新进度条或者在一个文本框中显示日志。</li>
+ *     <li>{@link #onPostExecute}, 在后台操作结束后由UI线程调用。后台计算的结果作为一个参数传递到这一步。</li>
  * </ol>
  * 
- * <h2>Cancelling a task</h2>
- * <p>A task can be cancelled at any time by invoking {@link #cancel(boolean)}. Invoking
- * this method will cause subsequent calls to {@link #isCancelled()} to return true.
- * After invoking this method, {@link #onCancelled(Object)}, instead of
- * {@link #onPostExecute(Object)} will be invoked after {@link #doInBackground(Object[])}
- * returns. To ensure that a task is cancelled as quickly as possible, you should always
- * check the return value of {@link #isCancelled()} periodically from
- * {@link #doInBackground(Object[])}, if possible (inside a loop for instance.)</p>
+ * <h2>取消一个任务</h2>
+ * <p>通过调用 {@link #cancel(boolean)}，一个任务可以随时被取消。调用此方法将导致之后被调用的 {@link #isCancelled()} 返回 true。
+ * 调用此方法之后, {@link #doInBackground(Object[])} 返回之后会调用 {@link #onCancelled(Object)}，
+ * 而不是 {@link #onPostExecute(Object)}。为了确保任务尽快取消，你应该在 {@link #doInBackground(Object[])} 中
+ * 循环检查 {@link #isCancelled()} 的返回值, 如果可能的话（例如内循环）。</p>
  *
- * <h2>Threading rules</h2>
- * <p>There are a few threading rules that must be followed for this class to
- * work properly:</p>
+ * <h2>线程的规则</h2>
+ * <p>为了能使这个类正常工作，有几个线程规则必须遵守:</p>
  * <ul>
- *     <li>The AsyncTask class must be loaded on the UI thread. This is done
- *     automatically as of {@link android.os.Build.VERSION_CODES#JELLY_BEAN}.</li>
- *     <li>The task instance must be created on the UI thread.</li>
- *     <li>{@link #execute} must be invoked on the UI thread.</li>
- *     <li>Do not call {@link #onPreExecute()}, {@link #onPostExecute},
- *     {@link #doInBackground}, {@link #onProgressUpdate} manually.</li>
- *     <li>The task can be executed only once (an exception will be thrown if
- *     a second execution is attempted.)</li>
+ *     <li>AsyncTask 类必须在 UI 线程中被装载。这是 {@link android.os.Build.VERSION_CODES#JELLY_BEAN} 自动完成的。</li>
+ *     <li>任务的实例必须在 UI 线程中被创建。</li>
+ *     <li>{@link #execute} 方法必须在 UI 线程中被调用。</li>
+ *     <li>不要手动调用 {@link #onPreExecute()}, {@link #onPostExecute},
+ *     {@link #doInBackground}, {@link #onProgressUpdate} 者几个方法。</li>
+ *     <li>任务只能被执行一次（如果被第二次执行将会抛出异常）。</li>
  * </ul>
  *
  * <h2>Memory observability</h2>
- * <p>AsyncTask guarantees that all callback calls are synchronized in such a way that the following
- * operations are safe without explicit synchronizations.</p>
+ * <p>在没有明确的同步下，以下操作是安全的方式下，AsyncTask 保证所有回调函数调用都是同步的。</p>
  * <ul>
- *     <li>Set member fields in the constructor or {@link #onPreExecute}, and refer to them
- *     in {@link #doInBackground}.
- *     <li>Set member fields in {@link #doInBackground}, and refer to them in
- *     {@link #onProgressUpdate} and {@link #onPostExecute}.
+ *     <li>在构造函数或 {@link #onPreExecute} 方法中设置成员字段, 在 {@link #doInBackground} 方法中参考他们。</li>
+ *     <li>在 {@link #doInBackground} 方法中设置成员字段, 在 {@link #onProgressUpdate} 和
+ *         {@link #onPostExecute} 方法中参考他们.</li>
  * </ul>
  *
- * <h2>Order of execution</h2>
- * <p>When first introduced, AsyncTasks were executed serially on a single background
- * thread. Starting with {@link android.os.Build.VERSION_CODES#DONUT}, this was changed
- * to a pool of threads allowing multiple tasks to operate in parallel. Starting with
- * {@link android.os.Build.VERSION_CODES#HONEYCOMB}, tasks are executed on a single
- * thread to avoid common application errors caused by parallel execution.</p>
- * <p>If you truly want parallel execution, you can invoke
- * {@link #executeOnExecutor(java.util.concurrent.Executor, Object[])} with
- * {@link #THREAD_POOL_EXECUTOR}.</p>
+ * <h2>执行的顺序</h2>
+ * <p>当首次引入，AsyncTasks 在一个后台线程中连续被执行。在 {@link android.os.Build.VERSION_CODES#DONUT} 下开始, 
+ * 这是改变了一个线程池允许多个任务并行操作。在 {@link android.os.Build.VERSION_CODES#HONEYCOMB} 下开始, 
+ * 任务在一个线程上被执行,以避免在并行执行情况下常见的应用程序错误</p>
+ * <p>如果你真的需要并行执行，你可以在 {@link #THREAD_POOL_EXECUTOR} 情况下，调用
+ * {@link #executeOnExecutor(java.util.concurrent.Executor, Object[])}。</p>
  */
 public abstract class AsyncTask<Params, Progress, Result> {
     private static final String LOG_TAG = "AsyncTask";
@@ -360,6 +331,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
 
     /**
      * Runs on the UI thread before {@link #doInBackground}.
+     * 
+     * 在 {@link #doInBackground} 方法之前，运行在 UI 主线程中
      *
      * @see #onPostExecute
      * @see #doInBackground
@@ -521,6 +494,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
     /**
      * Executes the task with the specified parameters. The task returns
      * itself (this) so that the caller can keep a reference to it.
+     * 
      * 
      * <p>Note: this function schedules the task on a queue for a single background
      * thread or pool of threads depending on the platform version.  When first

@@ -82,17 +82,13 @@ public class Handler {
     }
     
     /**
-     * Subclasses must implement this to receive messages.
-     *
-     * ×ÓÀà±ØĞëÈ¥ÊµÏÖÕâ¸ö·½·¨È¥½ÓÊÕÏûÏ¢
+     * å­ç±»å¿…é¡»å»å®ç°è¿™ä¸ªæ–¹æ³•ï¼Œæ‰å¯ä»¥æ¥æ”¶æ¶ˆæ¯
      */
     public void handleMessage(Message msg) {
     }
     
     /**
-     * Handle system messages here.
-     *
-     * ÔÚÕâÀï´¦ÀíÏµÍ³ÏûÏ¢
+     * åœ¨è¿™é‡Œå¤„ç†ç³»ç»Ÿæ¶ˆæ¯
      */
     public void dispatchMessage(Message msg) {
         if (msg.callback != null) {
