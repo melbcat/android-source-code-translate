@@ -17,11 +17,8 @@
 package android.os;
 
 /**
- * Handy class for starting a new thread that has a looper. The looper can then be 
- * used to create handler classes. Note that start() must still be called.
- * 
- * Ò»¸öºÜ·½±ãµÄÀà£¬Ò»¸ö¿ÉÒÔÓµÓĞ looper µÄÏß³Ì¡£ÔÚ´´½¨ handler µÄÀàÖĞ looper ¿ÉÒÔ±»Ê¹ÓÃ¡£
- * ×¢Òâ: start() ·½·¨ÈÔÈ»ĞèÒª±»µ÷ÓÃ
+ * è¿™æ˜¯ä¸€ä¸ªæ–¹ä¾¿åˆ›å»ºæ–°çº¿ç¨‹å¹¶æ‹¥æœ‰ looper çš„ç±»ï¼Œå¯ä»¥åˆ©ç”¨è¿™ä¸ª looper åˆ›å»º Handler
+ * æ³¨æ„: start() æ–¹æ³•ä»ç„¶è¿˜æ²¡æœ‰è¢«è°ƒç”¨
  */
 public class HandlerThread extends Thread {
     int mPriority;
@@ -34,11 +31,9 @@ public class HandlerThread extends Thread {
     }
     
     /**
-     * Constructs a HandlerThread.
+     * æ„é€ ä¸€ä¸ª HandlerThread å¯¹è±¡
      * @param name
-     * @param priority The priority to run the thread at. The value supplied must be from 
-     * {@link android.os.Process} and not from java.lang.Thread.
-     *                 Ïß³ÌÔËĞĞµÄÓÅÏÈ¼¶¡£Õâ¸öÖµ±ØĞëÀ´×Ô {@link android.os.Process} ¶ø²»ÊÇÀ´×Ô java.lang.Thread
+     * @param priority çº¿ç¨‹è¿è¡Œçš„ä¼˜å…ˆçº§ã€‚è¿™ä¸ªå€¼å¿…é¡»æ¥è‡ª {@link android.os.Process} è€Œä¸æ˜¯æ¥è‡ª java.lang.Thread
      */
     public HandlerThread(String name, int priority) {
         super(name);
@@ -46,10 +41,7 @@ public class HandlerThread extends Thread {
     }
     
     /**
-     * Call back method that can be explicitly overridden if needed to execute some
-     * setup before Looper loops.
-     * 
-     * Èç¹ûÔÚ Looper loops Ö®Ç°ÄãĞèÒªÖ´ĞĞÒ»Ğ©²Ù×÷£¬ÖØĞ´Õâ¸ö»Øµ÷·½·¨
+     * å¦‚æœåœ¨ Looper è°ƒç”¨ loops æ–¹æ³•ä¹‹å‰ä½ éœ€è¦æ‰§è¡Œä¸€äº›æ“ä½œï¼Œè¯·é‡å†™è¿™ä¸ªå›è°ƒæ–¹æ³•
      */
     protected void onLooperPrepared() {
     }
@@ -69,12 +61,8 @@ public class HandlerThread extends Thread {
     }
     
     /**
-     * This method returns the Looper associated with this thread. If this thread not been started
-     * or for any reason is isAlive() returns false, this method will return null. If this thread 
-     * has been started, this method will block until the looper has been initialized.
-     *
-     * Õâ¸ö·½·¨·µ»Øµ±Ç°Ïß³ÌËùÓµÓĞµÄ Looper ¶ÔÏó¡£Èç¹ûÕâ¸öÏß³Ì²¢Ã»ÓĞÆô¶¯»òÕßÓÉÓÚÒ»Ğ©Ô­Òò isAlive() ·½·¨·µ»ØÎª false£¬
-     * Õâ¸ö·½·¨½«·µ»Ø null£¬Èç¹ûÕâ¸öÏß³ÌÒÑ¾­±»Æô¶¯£¬Õâ¸ö·½·¨½«±»Ëø¶¨Ö±µ½ looper ¶ÔÏóÒÑ¾­±»³õÊ¼»¯
+     * è¿™ä¸ªæ–¹æ³•è¿”å›å½“å‰çº¿ç¨‹æ‰€æ‹¥æœ‰çš„ Looper å¯¹è±¡ã€‚å¦‚æœè¿™ä¸ªçº¿ç¨‹å¹¶æ²¡æœ‰å¯åŠ¨æˆ–è€…ç”±äºä¸€äº›åŸå›  isAlive() æ–¹æ³•è¿”å›ä¸º falseï¼Œ
+     * è¿™ä¸ªæ–¹æ³•å°†è¿”å› nullï¼Œå¦‚æœè¿™ä¸ªçº¿ç¨‹å·²ç»è¢«å¯åŠ¨ï¼Œè¿™ä¸ªæ–¹æ³•å°†è¢«é”å®šç›´åˆ° looper å¯¹è±¡å·²ç»è¢«åˆå§‹åŒ–
      * 
      * @return The looper.
      */
@@ -83,8 +71,7 @@ public class HandlerThread extends Thread {
             return null;
         }
         
-        // If the thread has been started, wait until the looper has been created.
-        // Èç¹ûÏß³ÌÒÑ¾­¿ªÊ¼£¬wait Ö±µ½ looper ¶ÔÏó±»´´½¨
+        // å¦‚æœçº¿ç¨‹å·²ç»å¼€å§‹ï¼Œwait ç›´åˆ° looper å¯¹è±¡è¢«åˆ›å»º
         synchronized (this) {
             while (isAlive() && mLooper == null) {
                 try {
@@ -97,28 +84,18 @@ public class HandlerThread extends Thread {
     }
 
     /**
-     * Quits the handler thread's looper.
-     * ÍË³ö handler Ïß³ÌµÄ looper ÊµÀı
+     * é€€å‡ºå½“å‰çº¿ç¨‹ä¸­æ­£åœ¨è¿è¡Œçš„ looper å®ä¾‹
      * <p>
-     * Causes the handler thread's looper to terminate without processing any
-     * more messages in the message queue.
-     * Ê¹Ïß³ÌÖĞµÄ looper ¶ÔÏó²»ÔÙ¹¤×÷£¬²»ÔÙÈ¥´¦ÀíÏûÏ¢¶ÓÁĞÖĞµÄÏûÏ¢
+     * ä½¿çº¿ç¨‹ä¸­çš„ looper å¯¹è±¡ä¸å†å·¥ä½œï¼Œä¸å†å»å¤„ç†æ¶ˆæ¯é˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯
      * </p><p>
-     * Any attempt to post messages to the queue after the looper is asked to quit will fail.
-     * For example, the {@link Handler#sendMessage(Message)} method will return false.
-     * µ± looper ÍË³öµÄÊ±£¬ÈÎºÎ³¢ÊÔ·¢ËÍÏûÏ¢µ½ÏûÏ¢¶ÓÁĞ¶¼»áÊ§°Ü
-     * ÀıÈç: {@link Handler#sendMessage(Message)} ·½·¨½«»á·µ»Ø false
+     * å½“ looper é€€å‡ºçš„æ—¶ï¼Œä»»ä½•å°è¯•å‘é€æ¶ˆæ¯åˆ°æ¶ˆæ¯é˜Ÿåˆ—éƒ½ä¼šå¤±è´¥
+     * ä¾‹å¦‚: {@link Handler#sendMessage(Message)} æ–¹æ³•å°†ä¼šè¿”å› false
      * </p><p class="note">
-     * Using this method may be unsafe because some messages may not be delivered
-     * before the looper terminates.  Consider using {@link #quitSafely} instead to ensure
-     * that all pending work is completed in an orderly manner.
-     * Ê¹ÓÃÕâ¸ö·½·¨¿ÉÄÜÊÇ²»°²È«µÄ£¬ÒòÎªÔÚ looper ±»ÖÕÖ¹Ö®Ç°Ò»Ğ©ÏûÏ¢¿ÉÄÜÃ»ÓĞ±»´¦Àí¡£
-     * ½¨ÒéÊ¹ÓÃ {@link #quitSafely} À´È·±£ËùÓĞ´ıÍê³ÉµÄÏûÏ¢¶¼ÊÇÒÔÓĞĞòµÄ·½Ê½Íê³É
+     * ä½¿ç”¨è¿™ä¸ªæ–¹æ³•å¯èƒ½æ˜¯ä¸å®‰å…¨çš„ï¼Œå› ä¸ºåœ¨ looper è¢«ç»ˆæ­¢ä¹‹å‰ä¸€äº›æ¶ˆæ¯å¯èƒ½æ²¡æœ‰è¢«å¤„ç†ã€‚
+     * å»ºè®®ä½¿ç”¨ {@link #quitSafely} æ¥ç¡®ä¿æ‰€æœ‰å¾…å®Œæˆçš„æ¶ˆæ¯éƒ½æ˜¯ä»¥æœ‰åºçš„æ–¹å¼å®Œæˆ
      * </p>
      *
-     * @return True if the looper looper has been asked to quit or false if the
-     * thread had not yet started running.
-     *         Èç¹û looper ÒÑ¾­±»ÍË³ö£¬Ôò·µ»Ø true¡£Èç¹ûÏß³ÌÖÁ½ñ¶¼Ã»ÓĞ±»Æô¶¯£¬Ôò·µ»Ø fasle
+     * @return å¦‚æœ looper å·²ç»è¢«é€€å‡ºï¼Œåˆ™è¿”å› trueã€‚å¦‚æœçº¿ç¨‹è‡³ä»Šéƒ½æ²¡æœ‰è¢«å¯åŠ¨ï¼Œåˆ™è¿”å› fasle
      *
      * @see #quitSafely
      */
@@ -132,30 +109,19 @@ public class HandlerThread extends Thread {
     }
 
     /**
-     * Quits the handler thread's looper safely.
-     * ÈÃ handler Ïß³ÌµÄ looper ÊµÀı¿ÉÒÔºÜ°²È«µÄÍË³ö
+     * å®‰å…¨é€€å‡ºå½“å‰çº¿ç¨‹ä¸­æ­£åœ¨è¿è¡Œçš„ looper å®ä¾‹
      * <p>
-     * Causes the handler thread's looper to terminate as soon as all remaining messages
-     * in the message queue that are already due to be delivered have been handled.
-     * Pending delayed messages with due times in the future will not be delivered.
-     * Ö±µ½ÏûÏ¢¶ÓÁĞÖĞËùÓĞÊ£ÏÂµÄÏûÏ¢ÒÑ¾­±» handler ´¦ÀíÁË£¬Ïß³ÌµÄ looper ÊµÀı²Å»áÖÕÖ¹¡£
-     * ´ıÑÓ³Ù·¢ËÍµÄÒ»Ğ©ÏûÏ¢½«²»ÔÙ±»´¦Àí
+     * ç›´åˆ°æ¶ˆæ¯é˜Ÿåˆ—ä¸­æ‰€æœ‰å‰©ä¸‹çš„æ¶ˆæ¯å·²ç»è¢« handler å¤„ç†äº†ï¼Œçº¿ç¨‹çš„ looper å®ä¾‹æ‰ä¼šç»ˆæ­¢ã€‚
+     * å¾…å»¶è¿Ÿå‘é€çš„ä¸€äº›æ¶ˆæ¯å°†ä¸å†è¢«å¤„ç†
      * </p><p>
-     * Any attempt to post messages to the queue after the looper is asked to quit will fail.
-     * For example, the {@link Handler#sendMessage(Message)} method will return false.
-     * µ± looper ÍË³öµÄÊ±£¬ÈÎºÎ³¢ÊÔ·¢ËÍÏûÏ¢µ½ÏûÏ¢¶ÓÁĞ¶¼»áÊ§°Ü
-     * ÀıÈç: {@link Handler#sendMessage(Message)} ·½·¨½«»á·µ»Ø false
+     * å½“ looper é€€å‡ºçš„æ—¶ï¼Œä»»ä½•å°è¯•å‘é€æ¶ˆæ¯åˆ°æ¶ˆæ¯é˜Ÿåˆ—éƒ½ä¼šå¤±è´¥
+     * ä¾‹å¦‚: {@link Handler#sendMessage(Message)} æ–¹æ³•å°†ä¼šè¿”å› false
      * </p><p>
-     * If the thread has not been started or has finished (that is if
-     * {@link #getLooper} returns null), then false is returned.
-     * Otherwise the looper is asked to quit and true is returned.
-     * Èç¹ûÏß³ÌÖÁ½ñÃ»ÓĞ±»Æô¶¯»òÊÇÒÑ¾­½áÊø({@link #getLooper} ·µ»Ø null)£¬½«·µ»Ø fasle
-     * ·ñÔò£¬looper ÍË³ö£¬·µ»Ø true
+     * å¦‚æœçº¿ç¨‹è‡³ä»Šæ²¡æœ‰è¢«å¯åŠ¨æˆ–æ˜¯å·²ç»ç»“æŸ({@link #getLooper} è¿”å› null)ï¼Œå°†è¿”å› fasle
+     * å¦åˆ™ï¼Œlooper é€€å‡ºï¼Œè¿”å› true
      * </p>
      *
-     * @return True if the looper looper has been asked to quit or false if the
-     * thread had not yet started running.
-     *         Èç¹û looper ÒÑ¾­±»ÍË³ö£¬Ôò·µ»Ø true¡£Èç¹ûÏß³ÌÖÁ½ñ¶¼Ã»ÓĞ±»Æô¶¯£¬Ôò·µ»Ø fasle
+     * @return å¦‚æœ looper å·²ç»è¢«é€€å‡ºï¼Œåˆ™è¿”å› trueã€‚å¦‚æœçº¿ç¨‹è‡³ä»Šéƒ½æ²¡æœ‰è¢«å¯åŠ¨ï¼Œåˆ™è¿”å› fasle
      */
     public boolean quitSafely() {
         Looper looper = getLooper();
@@ -167,9 +133,7 @@ public class HandlerThread extends Thread {
     }
 
     /**
-     * Returns the identifier of this thread. See Process.myTid().
-     *
-     * ·µ»ØÕâ¸öÏß³ÌµÄ±êÊ¶·û¡£¿ÉÒÔÈ¥¿´ Process.myTid() ÊµÏÖ
+     * è¿”å›è¿™ä¸ªçº¿ç¨‹çš„æ ‡è¯†ç¬¦ã€‚å¯ä»¥å»çœ‹ Process.myTid() å…·ä½“å®ç°
      */
     public int getThreadId() {
         return mTid;
