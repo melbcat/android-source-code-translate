@@ -17,8 +17,8 @@
 package android.os;
 
 /**
- * è¿™æ˜¯ä¸€ä¸ªæ–¹ä¾¿åˆ›å»ºæ–°çº¿ç¨‹å¹¶æ‹¥æœ‰ looper çš„ç±»ï¼Œå¯ä»¥åˆ©ç”¨è¿™ä¸ª looper åˆ›å»º Handler
- * æ³¨æ„: start() æ–¹æ³•ä»ç„¶è¿˜æ²¡æœ‰è¢«è°ƒç”¨
+ * ÕâÊÇÒ»¸ö·½±ã´´½¨ĞÂÏß³Ì²¢ÓµÓĞ looper µÄÀà£¬¿ÉÒÔÀûÓÃÕâ¸ö looper ´´½¨ Handler
+ * ×¢Òâ: start() ·½·¨ÈÔÈ»»¹Ã»ÓĞ±»µ÷ÓÃ
  */
 public class HandlerThread extends Thread {
     int mPriority;
@@ -31,9 +31,9 @@ public class HandlerThread extends Thread {
     }
     
     /**
-     * æ„é€ ä¸€ä¸ª HandlerThread å¯¹è±¡
+     * ¹¹ÔìÒ»¸ö HandlerThread ¶ÔÏó
      * @param name
-     * @param priority çº¿ç¨‹è¿è¡Œçš„ä¼˜å…ˆçº§ã€‚è¿™ä¸ªå€¼å¿…é¡»æ¥è‡ª {@link android.os.Process} è€Œä¸æ˜¯æ¥è‡ª java.lang.Thread
+     * @param priority Ïß³ÌÔËĞĞµÄÓÅÏÈ¼¶¡£Õâ¸öÖµ±ØĞëÀ´×Ô {@link android.os.Process} ¶ø²»ÊÇÀ´×Ô java.lang.Thread
      */
     public HandlerThread(String name, int priority) {
         super(name);
@@ -41,7 +41,7 @@ public class HandlerThread extends Thread {
     }
     
     /**
-     * å¦‚æœåœ¨ Looper è°ƒç”¨ loops æ–¹æ³•ä¹‹å‰ä½ éœ€è¦æ‰§è¡Œä¸€äº›æ“ä½œï¼Œè¯·é‡å†™è¿™ä¸ªå›è°ƒæ–¹æ³•
+     * Èç¹ûÔÚ Looper µ÷ÓÃ loops ·½·¨Ö®Ç°ÄãĞèÒªÖ´ĞĞÒ»Ğ©²Ù×÷£¬ÇëÖØĞ´Õâ¸ö»Øµ÷·½·¨
      */
     protected void onLooperPrepared() {
     }
@@ -61,8 +61,8 @@ public class HandlerThread extends Thread {
     }
     
     /**
-     * è¿™ä¸ªæ–¹æ³•è¿”å›å½“å‰çº¿ç¨‹æ‰€æ‹¥æœ‰çš„ Looper å¯¹è±¡ã€‚å¦‚æœè¿™ä¸ªçº¿ç¨‹å¹¶æ²¡æœ‰å¯åŠ¨æˆ–è€…ç”±äºä¸€äº›åŸå›  isAlive() æ–¹æ³•è¿”å›ä¸º falseï¼Œ
-     * è¿™ä¸ªæ–¹æ³•å°†è¿”å› nullï¼Œå¦‚æœè¿™ä¸ªçº¿ç¨‹å·²ç»è¢«å¯åŠ¨ï¼Œè¿™ä¸ªæ–¹æ³•å°†è¢«é”å®šç›´åˆ° looper å¯¹è±¡å·²ç»è¢«åˆå§‹åŒ–
+     * Õâ¸ö·½·¨·µ»Øµ±Ç°Ïß³ÌËùÓµÓĞµÄ Looper ¶ÔÏó¡£Èç¹ûÕâ¸öÏß³Ì²¢Ã»ÓĞÆô¶¯»òÕßÓÉÓÚÒ»Ğ©Ô­Òò isAlive() ·½·¨·µ»ØÎª false£¬
+     * Õâ¸ö·½·¨½«·µ»Ø null£¬Èç¹ûÕâ¸öÏß³ÌÒÑ¾­±»Æô¶¯£¬Õâ¸ö·½·¨½«±»Ëø¶¨Ö±µ½ looper ¶ÔÏóÒÑ¾­±»³õÊ¼»¯
      * 
      * @return The looper.
      */
@@ -71,7 +71,7 @@ public class HandlerThread extends Thread {
             return null;
         }
         
-        // å¦‚æœçº¿ç¨‹å·²ç»å¼€å§‹ï¼Œwait ç›´åˆ° looper å¯¹è±¡è¢«åˆ›å»º
+        // Èç¹ûÏß³ÌÒÑ¾­¿ªÊ¼£¬wait Ö±µ½ looper ¶ÔÏó±»´´½¨
         synchronized (this) {
             while (isAlive() && mLooper == null) {
                 try {
@@ -84,18 +84,18 @@ public class HandlerThread extends Thread {
     }
 
     /**
-     * é€€å‡ºå½“å‰çº¿ç¨‹ä¸­æ­£åœ¨è¿è¡Œçš„ looper å®ä¾‹
+     * ÍË³öµ±Ç°Ïß³ÌÖĞÕıÔÚÔËĞĞµÄ looper ÊµÀı
      * <p>
-     * ä½¿çº¿ç¨‹ä¸­çš„ looper å¯¹è±¡ä¸å†å·¥ä½œï¼Œä¸å†å»å¤„ç†æ¶ˆæ¯é˜Ÿåˆ—ä¸­çš„æ¶ˆæ¯
+     * Ê¹Ïß³ÌÖĞµÄ looper ¶ÔÏó²»ÔÙ¹¤×÷£¬²»ÔÙÈ¥´¦ÀíÏûÏ¢¶ÓÁĞÖĞµÄÏûÏ¢
      * </p><p>
-     * å½“ looper é€€å‡ºçš„æ—¶ï¼Œä»»ä½•å°è¯•å‘é€æ¶ˆæ¯åˆ°æ¶ˆæ¯é˜Ÿåˆ—éƒ½ä¼šå¤±è´¥
-     * ä¾‹å¦‚: {@link Handler#sendMessage(Message)} æ–¹æ³•å°†ä¼šè¿”å› false
+     * µ± looper ÍË³öµÄÊ±£¬ÈÎºÎ³¢ÊÔ·¢ËÍÏûÏ¢µ½ÏûÏ¢¶ÓÁĞ¶¼»áÊ§°Ü
+     * ÀıÈç: {@link Handler#sendMessage(Message)} ·½·¨½«»á·µ»Ø false
      * </p><p class="note">
-     * ä½¿ç”¨è¿™ä¸ªæ–¹æ³•å¯èƒ½æ˜¯ä¸å®‰å…¨çš„ï¼Œå› ä¸ºåœ¨ looper è¢«ç»ˆæ­¢ä¹‹å‰ä¸€äº›æ¶ˆæ¯å¯èƒ½æ²¡æœ‰è¢«å¤„ç†ã€‚
-     * å»ºè®®ä½¿ç”¨ {@link #quitSafely} æ¥ç¡®ä¿æ‰€æœ‰å¾…å®Œæˆçš„æ¶ˆæ¯éƒ½æ˜¯ä»¥æœ‰åºçš„æ–¹å¼å®Œæˆ
+     * Ê¹ÓÃÕâ¸ö·½·¨¿ÉÄÜÊÇ²»°²È«µÄ£¬ÒòÎªÔÚ looper ±»ÖÕÖ¹Ö®Ç°Ò»Ğ©ÏûÏ¢¿ÉÄÜÃ»ÓĞ±»´¦Àí¡£
+     * ½¨ÒéÊ¹ÓÃ {@link #quitSafely} À´È·±£ËùÓĞ´ıÍê³ÉµÄÏûÏ¢¶¼ÊÇÒÔÓĞĞòµÄ·½Ê½Íê³É
      * </p>
      *
-     * @return å¦‚æœ looper å·²ç»è¢«é€€å‡ºï¼Œåˆ™è¿”å› trueã€‚å¦‚æœçº¿ç¨‹è‡³ä»Šéƒ½æ²¡æœ‰è¢«å¯åŠ¨ï¼Œåˆ™è¿”å› fasle
+     * @return Èç¹û looper ÒÑ¾­±»ÍË³ö£¬Ôò·µ»Ø true¡£Èç¹ûÏß³ÌÖÁ½ñ¶¼Ã»ÓĞ±»Æô¶¯£¬Ôò·µ»Ø fasle
      *
      * @see #quitSafely
      */
@@ -109,19 +109,19 @@ public class HandlerThread extends Thread {
     }
 
     /**
-     * å®‰å…¨é€€å‡ºå½“å‰çº¿ç¨‹ä¸­æ­£åœ¨è¿è¡Œçš„ looper å®ä¾‹
+     * °²È«ÍË³öµ±Ç°Ïß³ÌÖĞÕıÔÚÔËĞĞµÄ looper ÊµÀı
      * <p>
-     * ç›´åˆ°æ¶ˆæ¯é˜Ÿåˆ—ä¸­æ‰€æœ‰å‰©ä¸‹çš„æ¶ˆæ¯å·²ç»è¢« handler å¤„ç†äº†ï¼Œçº¿ç¨‹çš„ looper å®ä¾‹æ‰ä¼šç»ˆæ­¢ã€‚
-     * å¾…å»¶è¿Ÿå‘é€çš„ä¸€äº›æ¶ˆæ¯å°†ä¸å†è¢«å¤„ç†
+     * Ö±µ½ÏûÏ¢¶ÓÁĞÖĞËùÓĞÊ£ÏÂµÄÏûÏ¢ÒÑ¾­±» handler ´¦ÀíÁË£¬Ïß³ÌµÄ looper ÊµÀı²Å»áÖÕÖ¹¡£
+     * ´ıÑÓ³Ù·¢ËÍµÄÒ»Ğ©ÏûÏ¢½«²»ÔÙ±»´¦Àí
      * </p><p>
-     * å½“ looper é€€å‡ºçš„æ—¶ï¼Œä»»ä½•å°è¯•å‘é€æ¶ˆæ¯åˆ°æ¶ˆæ¯é˜Ÿåˆ—éƒ½ä¼šå¤±è´¥
-     * ä¾‹å¦‚: {@link Handler#sendMessage(Message)} æ–¹æ³•å°†ä¼šè¿”å› false
+     * µ± looper ÍË³öµÄÊ±£¬ÈÎºÎ³¢ÊÔ·¢ËÍÏûÏ¢µ½ÏûÏ¢¶ÓÁĞ¶¼»áÊ§°Ü
+     * ÀıÈç: {@link Handler#sendMessage(Message)} ·½·¨½«»á·µ»Ø false
      * </p><p>
-     * å¦‚æœçº¿ç¨‹è‡³ä»Šæ²¡æœ‰è¢«å¯åŠ¨æˆ–æ˜¯å·²ç»ç»“æŸ({@link #getLooper} è¿”å› null)ï¼Œå°†è¿”å› fasle
-     * å¦åˆ™ï¼Œlooper é€€å‡ºï¼Œè¿”å› true
+     * Èç¹ûÏß³ÌÖÁ½ñÃ»ÓĞ±»Æô¶¯»òÊÇÒÑ¾­½áÊø({@link #getLooper} ·µ»Ø null)£¬½«·µ»Ø fasle
+     * ·ñÔò£¬looper ÍË³ö£¬·µ»Ø true
      * </p>
      *
-     * @return å¦‚æœ looper å·²ç»è¢«é€€å‡ºï¼Œåˆ™è¿”å› trueã€‚å¦‚æœçº¿ç¨‹è‡³ä»Šéƒ½æ²¡æœ‰è¢«å¯åŠ¨ï¼Œåˆ™è¿”å› fasle
+     * @return Èç¹û looper ÒÑ¾­±»ÍË³ö£¬Ôò·µ»Ø true¡£Èç¹ûÏß³ÌÖÁ½ñ¶¼Ã»ÓĞ±»Æô¶¯£¬Ôò·µ»Ø fasle
      */
     public boolean quitSafely() {
         Looper looper = getLooper();
@@ -133,7 +133,7 @@ public class HandlerThread extends Thread {
     }
 
     /**
-     * è¿”å›è¿™ä¸ªçº¿ç¨‹çš„æ ‡è¯†ç¬¦ã€‚å¯ä»¥å»çœ‹ Process.myTid() å…·ä½“å®ç°
+     * ·µ»ØÕâ¸öÏß³ÌµÄ±êÊ¶·û¡£¿ÉÒÔÈ¥¿´ Process.myTid() ¾ßÌåÊµÏÖ
      */
     public int getThreadId() {
         return mTid;
