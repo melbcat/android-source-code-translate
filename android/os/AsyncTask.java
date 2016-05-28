@@ -168,15 +168,14 @@ public abstract class AsyncTask<Params, Progress, Result> {
             new LinkedBlockingQueue<Runnable>(128);
 
     /**
-     * An {@link Executor} that can be used to execute tasks in parallel.
+     * 可用于并行执行任务的 {@link Executor}
      */
     public static final Executor THREAD_POOL_EXECUTOR
             = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,
                     TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
 
     /**
-     * An {@link Executor} that executes tasks one at a time in serial
-     * order.  This serialization is global to a particular process.
+     * 串行执行任务的 {@link Executor} ，这个序列对于一个具体的进程是全局的。
      */
     public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
 
@@ -221,20 +220,19 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Indicates the current status of the task. Each status will be set only once
-     * during the lifetime of a task.
+     * 表明一个任务当前的状态。在任务的声明周期里，每个状态仅仅可以被设置一次。
      */
     public enum Status {
         /**
-         * Indicates that the task has not been executed yet.
+         * 表明这个任务至今还没有被执行
          */
         PENDING,
         /**
-         * Indicates that the task is running.
+         * 表明任务正在运行中
          */
         RUNNING,
         /**
-         * Indicates that {@link AsyncTask#onPostExecute} has finished.
+         * 表明 {@link AsyncTask#onPostExecute} 这个方法已经执行了
          */
         FINISHED,
     }
@@ -254,7 +252,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Creates a new asynchronous task. This constructor must be invoked on the UI thread.
+     * 创建一个新的异步任务。这个构造函数必须在 UI 线程中被调用。
      */
     public AsyncTask() {
         mWorker = new WorkerRunnable<Params, Result>() {
@@ -302,25 +300,22 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Returns the current status of this task.
+     * 返回任务的当前状态
      *
-     * @return The current status.
+     * @return 当前状态
      */
     public final Status getStatus() {
         return mStatus;
     }
 
     /**
-     * Override this method to perform a computation on a background thread. The
-     * specified parameters are the parameters passed to {@link #execute}
-     * by the caller of this task.
+     * 重写这个方法，在后台线程中执行计算。指定的参数是由 {@link #execute} 方法传递的。
      *
-     * This method can call {@link #publishProgress} to publish updates
-     * on the UI thread.
+     * 这个方法中调用 {@link #publishProgress} 方法，在UI线程中更新数据。
      *
-     * @param params The parameters of the task.
+     * @param params 任务的参数.
      *
-     * @return A result, defined by the subclass of this task.
+     * @return 返回一个此任务子类定义的结果 Result
      *
      * @see #onPreExecute()
      * @see #onPostExecute
@@ -330,9 +325,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
     protected abstract Result doInBackground(Params... params);
 
     /**
-     * Runs on the UI thread before {@link #doInBackground}.
-     * 
-     * 在 {@link #doInBackground} 方法之前，运行在 UI 主线程中
+     * 在 {@link #doInBackground} 方法执行之前，运行在 UI 主线程中
      *
      * @see #onPostExecute
      * @see #doInBackground
@@ -342,12 +335,12 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * <p>Runs on the UI thread after {@link #doInBackground}. The
-     * specified result is the value returned by {@link #doInBackground}.</p>
+     * <p>在 {@link #doInBackground} 方法执行之后，运行在UI线程。
+     * 此方法的参数是 {@link #doInBackground} 的返回值。</p>
      * 
-     * <p>This method won't be invoked if the task was cancelled.</p>
+     * <p>如果这个任务被取消，这个方法将不再被调用。</p>
      *
-     * @param result The result of the operation computed by {@link #doInBackground}.
+     * @param result {@link #doInBackground} 方法的返回值.
      *
      * @see #onPreExecute
      * @see #doInBackground
@@ -359,10 +352,10 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Runs on the UI thread after {@link #publishProgress} is invoked.
-     * The specified values are the values passed to {@link #publishProgress}.
+     * 在 {@link #publishProgress} 被调用之后，运行在UI线程中。方法中的参数是已经
+     * 被传送到 {@link #publishProgress} 中的参数
      *
-     * @param values The values indicating progress.
+     * @param values 指示进度的值
      *
      * @see #publishProgress
      * @see #doInBackground
@@ -373,15 +366,13 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * <p>Runs on the UI thread after {@link #cancel(boolean)} is invoked and
-     * {@link #doInBackground(Object[])} has finished.</p>
+     * <p>在 {@link #cancel(boolean)} 被调用之后，运行在UI线程中，并且此时 
+     * {@link #doInBackground(Object[])} 已经结束</p>
      * 
-     * <p>The default implementation simply invokes {@link #onCancelled()} and
-     * ignores the result. If you write your own implementation, do not call
-     * <code>super.onCancelled(result)</code>.</p>
+     * <p>默认简单的实现直接调用了 {@link #onCancelled()} 方法，忽略了参数。
+     * 如果你要重写此方法，不要调用 <code>super.onCancelled(result)</code>。</p>
      *
-     * @param result The result, if any, computed in
-     *               {@link #doInBackground(Object[])}, can be null
+     * @param result 参数可能是 {@link #doInBackground(Object[])} 的计算结果，也可能是null
      * 
      * @see #cancel(boolean)
      * @see #isCancelled()
@@ -393,12 +384,11 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }    
     
     /**
-     * <p>Applications should preferably override {@link #onCancelled(Object)}.
-     * This method is invoked by the default implementation of
-     * {@link #onCancelled(Object)}.</p>
+     * <p>应用程序最好重写 {@link #onCancelled(Object)} 这个方法。
+     * 这个方法默认被 {@link #onCancelled(Object)} 的实现方法所调用。</p>
      * 
-     * <p>Runs on the UI thread after {@link #cancel(boolean)} is invoked and
-     * {@link #doInBackground(Object[])} has finished.</p>
+     * <p>在 {@link #cancel(boolean)} 方法被调用之后运行在UI线程中，此时，
+     * {@link #doInBackground(Object[])} 已经完成执行。</p>
      *
      * @see #onCancelled(Object) 
      * @see #cancel(boolean)
@@ -409,12 +399,11 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Returns <tt>true</tt> if this task was cancelled before it completed
-     * normally. If you are calling {@link #cancel(boolean)} on the task,
-     * the value returned by this method should be checked periodically from
-     * {@link #doInBackground(Object[])} to end the task as soon as possible.
+     * 在这个任务执行完成之前，如果它被取消，返回<tt>true</tt>。如果你正在对你的任务
+     * 执行 {@link #cancel(boolean)} 方法，你应该在 {@link #doInBackground(Object[])} 方法中
+     * 检查这个方法的返回值，这样可以尽快的结束这个任务。
      *
-     * @return <tt>true</tt> if task was cancelled before it completed
+     * @return 如果任务在它完成前被取消，返回<tt>true</tt>
      *
      * @see #cancel(boolean)
      */
@@ -423,30 +412,20 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * <p>Attempts to cancel execution of this task.  This attempt will
-     * fail if the task has already completed, already been cancelled,
-     * or could not be cancelled for some other reason. If successful,
-     * and this task has not started when <tt>cancel</tt> is called,
-     * this task should never run. If the task has already started,
-     * then the <tt>mayInterruptIfRunning</tt> parameter determines
-     * whether the thread executing this task should be interrupted in
-     * an attempt to stop the task.</p>
+     * <p>尝试取消执行这个任务。如果任务已经执行结束、已经被取消、或是因为其他原因并不能被取消等，
+     * 这个尝试将会是失败的。当调用此 <tt>cancel</tt> 方法时，此方法执行成功并且这个任务还没有执行，
+     * 那么此任务将不再执行。如果任务已经开始，那 <tt>mayInterruptIfRunning</tt> 参数的值确定是否
+     * 应该中断线程来停止这个任务。</p>
      * 
-     * <p>Calling this method will result in {@link #onCancelled(Object)} being
-     * invoked on the UI thread after {@link #doInBackground(Object[])}
-     * returns. Calling this method guarantees that {@link #onPostExecute(Object)}
-     * is never invoked. After invoking this method, you should check the
-     * value returned by {@link #isCancelled()} periodically from
-     * {@link #doInBackground(Object[])} to finish the task as early as
-     * possible.</p>
+     * <p>调用这个方法将会导致，{@link #doInBackground(Object[])} 返回之后，{@link #onCancelled(Object)}
+     * 方法在UI线程中国被调用。调用这个方法保证了 {@link #onPostExecute(Object)} 方法将不再被调用。
+     * 在调用这个方法之后，你应该在 {@link #doInBackground(Object[])} 方法中定期检查 {@link #isCancelled()}
+     * 方法的返回值，这样可以尽快的结束这个任务。</p>
      *
-     * @param mayInterruptIfRunning <tt>true</tt> if the thread executing this
-     *        task should be interrupted; otherwise, in-progress tasks are allowed
-     *        to complete.
+     * @param mayInterruptIfRunning 如果为<tt>true</tt>则正在执行的线程将会中断；否则正在执行的任务可以完成
      *
-     * @return <tt>false</tt> if the task could not be cancelled,
-     *         typically because it has already completed normally;
-     *         <tt>true</tt> otherwise
+     * @return <tt>false</tt> 如果任务不能被取消，通常是因为它已经正常完成。
+     *         <tt>true</tt> 否则
      *
      * @see #isCancelled()
      * @see #onCancelled(Object)
@@ -457,34 +436,30 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Waits if necessary for the computation to complete, and then
-     * retrieves its result.
+     * 等待计算结束并返回结果
      *
-     * @return The computed result.
+     * @return 计算结果
      *
-     * @throws CancellationException If the computation was cancelled.
-     * @throws ExecutionException If the computation threw an exception.
-     * @throws InterruptedException If the current thread was interrupted
-     *         while waiting.
+     * @throws CancellationException 如果计算被取消
+     * @throws ExecutionException 如果计算抛出一个异常
+     * @throws InterruptedException 当等待时，当前线程被中断
      */
     public final Result get() throws InterruptedException, ExecutionException {
         return mFuture.get();
     }
 
     /**
-     * Waits if necessary for at most the given time for the computation
-     * to complete, and then retrieves its result.
+     * 等待计算结束并返回结果，最长时间为给定时间
      *
-     * @param timeout Time to wait before cancelling the operation.
-     * @param unit The time unit for the timeout.
+     * @param timeout 取消这个操作之前需等待的时间
+     * @param unit 超时的时间单位
      *
-     * @return The computed result.
+     * @return 计算结果
      *
-     * @throws CancellationException If the computation was cancelled.
-     * @throws ExecutionException If the computation threw an exception.
-     * @throws InterruptedException If the current thread was interrupted
-     *         while waiting.
-     * @throws TimeoutException If the wait timed out.
+     * @throws CancellationException 如果计算被取消
+     * @throws ExecutionException 如果计算抛出一个异常
+     * @throws InterruptedException 当等待时，当前线程被中断
+     * @throws TimeoutException 等待时间.
      */
     public final Result get(long timeout, TimeUnit unit) throws InterruptedException,
             ExecutionException, TimeoutException {
@@ -492,30 +467,24 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Executes the task with the specified parameters. The task returns
-     * itself (this) so that the caller can keep a reference to it.
+     * 用指定的参数执行此任务。这个方法将返回此任务本身，所以调用者可以拥有此任务的引用。
      * 
      * 
-     * <p>Note: this function schedules the task on a queue for a single background
-     * thread or pool of threads depending on the platform version.  When first
-     * introduced, AsyncTasks were executed serially on a single background thread.
-     * Starting with {@link android.os.Build.VERSION_CODES#DONUT}, this was changed
-     * to a pool of threads allowing multiple tasks to operate in parallel. Starting
-     * {@link android.os.Build.VERSION_CODES#HONEYCOMB}, tasks are back to being
-     * executed on a single thread to avoid common application errors caused
-     * by parallel execution.  If you truly want parallel execution, you can use
-     * the {@link #executeOnExecutor} version of this method
-     * with {@link #THREAD_POOL_EXECUTOR}; however, see commentary there for warnings
-     * on its use.
+     * <p>注意：依据平台的版本，这个函数安排任务队列在一个后台单线程中或是线程池中。
+     * 第一次引进时，AsyncTasks 被执行在一个后台单线程中。以 {@link android.os.Build.VERSION_CODES#DONUT}
+     * 形式开始，它将变成一个可以允许多个任务并行操作线程池。以 {@link android.os.Build.VERSION_CODES#HONEYCOMB}
+     * 形式开始，任务将在后台一个线程中执行，避免常见应用程序并行执行造成的错误。
+     * 如果你真的想要并行执行，在{@link #THREAD_POOL_EXECUTOR} 下，你可以使用 {@link #executeOnExecutor} 方法；
+     * 然而，看注释文档中的Warning部分。
      *
-     * <p>This method must be invoked on the UI thread.
+     * <p>这个方法必须被调用子UI线程中
      *
-     * @param params The parameters of the task.
+     * @param params 任务的参数
      *
-     * @return This instance of AsyncTask.
+     * @return AsyncTask 的一个实例
      *
-     * @throws IllegalStateException If {@link #getStatus()} returns either
-     *         {@link AsyncTask.Status#RUNNING} or {@link AsyncTask.Status#FINISHED}.
+     * @throws IllegalStateException 如果 {@link #getStatus()} 方法返回的是
+     *         {@link AsyncTask.Status#RUNNING} 或 {@link AsyncTask.Status#FINISHED}
      *
      * @see #executeOnExecutor(java.util.concurrent.Executor, Object[])
      * @see #execute(Runnable)
@@ -526,35 +495,27 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Executes the task with the specified parameters. The task returns
-     * itself (this) so that the caller can keep a reference to it.
+     * 用指定的参数执行此任务。这个方法将返回此任务本身，所以调用者可以拥有此任务的引用。
      * 
-     * <p>This method is typically used with {@link #THREAD_POOL_EXECUTOR} to
-     * allow multiple tasks to run in parallel on a pool of threads managed by
-     * AsyncTask, however you can also use your own {@link Executor} for custom
-     * behavior.
+     * <p>这个方法通常使用 {@link #THREAD_POOL_EXECUTOR} 来允许多个任务并行运行在一个线程池中，
+     * 然而你也可以使用你自己的 {@link Executor}。
      * 
-     * <p><em>Warning:</em> Allowing multiple tasks to run in parallel from
-     * a thread pool is generally <em>not</em> what one wants, because the order
-     * of their operation is not defined.  For example, if these tasks are used
-     * to modify any state in common (such as writing a file due to a button click),
-     * there are no guarantees on the order of the modifications.
-     * Without careful work it is possible in rare cases for the newer version
-     * of the data to be over-written by an older one, leading to obscure data
-     * loss and stability issues.  Such changes are best
-     * executed in serial; to guarantee such work is serialized regardless of
-     * platform version you can use this function with {@link #SERIAL_EXECUTOR}.
+     * <p><em>Warning:</em> 允许多个任务并行运行的线程池通常并不是自己想要的那样，
+     * 因为他们的操作是没有定义顺序的。例如，例如，如果这些任务是用来修改共同之处
+     * (比如单击一个按钮，写一个文件)，并不能保证是顺序修改的。没有认真工作，
+     * 新版本的数据被旧版本所覆盖，导致的数据丢失和稳定性问题。这种变化是最好的串行执行的;
+     * 保证这样的工作是序列化的而不管平台的版本，在 {@link #SERIAL_EXECUTOR} 下，你可以使用
+     * 这个方法。
      *
-     * <p>This method must be invoked on the UI thread.
+     * <p>这个方法必须被调用子UI线程中
      *
-     * @param exec The executor to use.  {@link #THREAD_POOL_EXECUTOR} is available as a
-     *              convenient process-wide thread pool for tasks that are loosely coupled.
-     * @param params The parameters of the task.
+     * @param exec 需要使用的 executor。作为一个方便的线程池，任务是宽松的，{@link #THREAD_POOL_EXECUTOR} 是可用的，
+     * @param params 任务的参数
      *
-     * @return This instance of AsyncTask.
+     * @return AsyncTask 的一个实例
      *
-     * @throws IllegalStateException If {@link #getStatus()} returns either
-     *         {@link AsyncTask.Status#RUNNING} or {@link AsyncTask.Status#FINISHED}.
+     * @throws IllegalStateException 如果 {@link #getStatus()} 方法返回的是
+     *         {@link AsyncTask.Status#RUNNING} 或 {@link AsyncTask.Status#FINISHED}
      *
      * @see #execute(Object[])
      */
@@ -584,9 +545,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * Convenience version of {@link #execute(Object...)} for use with
-     * a simple Runnable object. See {@link #execute(Object[])} for more
-     * information on the order of execution.
+     * 一个方便的 {@link #execute(Object...)} 版本，通过使用一个简单的 Runnable 对象。
+     * 有关更多信息，请看 {@link #execute(Object[])}。
      *
      * @see #execute(Object[])
      * @see #executeOnExecutor(java.util.concurrent.Executor, Object[])
@@ -597,15 +557,13 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     /**
-     * This method can be invoked from {@link #doInBackground} to
-     * publish updates on the UI thread while the background computation is
-     * still running. Each call to this method will trigger the execution of
-     * {@link #onProgressUpdate} on the UI thread.
+     * 从 {@link #doInBackground} 方法执行开始到，在UI线程上发布更新，
+     * 当后台计算仍然在运行时，这个方法一直被执行。每次调用这个方法将触发 
+     * {@link #onProgressUpdate} 在UI线程上被执行。
      *
-     * {@link #onProgressUpdate} will not be called if the task has been
-     * canceled.
+     * 如果任务被取消，{@link #onProgressUpdate} 将不再被触发。
      *
-     * @param values The progress values to update the UI with.
+     * @param values 更新UI的进度值.
      *
      * @see #onProgressUpdate
      * @see #doInBackground
