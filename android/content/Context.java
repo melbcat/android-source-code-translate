@@ -64,18 +64,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Interface to global information about an application environment.  This is
- * an abstract class whose implementation is provided by
- * the Android system.  It
- * allows access to application-specific resources and classes, as well as
- * up-calls for application-level operations such as launching activities,
- * broadcasting and receiving intents, etc.
+ * 关于应用环境的一个全部信息的接口。 这是一个android系统提供的抽象类。它允许使用应用
+ * 详细的资源及类，也包括对上层操作的调用，例如运行activity，广播和接受意图，等。
  */
 public abstract class Context {
     /**
-     * File creation mode: the default mode, where the created file can only
-     * be accessed by the calling application (or all applications sharing the
-     * same user ID).
+     * 文件创作模型：默认模型,仅由运行的应用有权限创建文件（或所有的应用分享同一个用户ID）
      * @see #MODE_WORLD_READABLE
      * @see #MODE_WORLD_WRITEABLE
      */
@@ -312,25 +306,23 @@ public abstract class Context {
      */
     public static final int BIND_NOT_VISIBLE = 0x40000000;
 
-    /** Return an AssetManager instance for your application's package. */
+    /** 返回应用包的一个AssertMannager实例 */
     public abstract AssetManager getAssets();
 
-    /** Return a Resources instance for your application's package. */
+    /** 返回应用包的一个Resources实例*/
     public abstract Resources getResources();
 
-    /** Return PackageManager instance to find global package information. */
+    /** 返回全局的包信息的一个PackageManage实例*/
     public abstract PackageManager getPackageManager();
 
-    /** Return a ContentResolver instance for your application's package. */
+    /** 返回应用包的一个ContentReslover实例 */
     public abstract ContentResolver getContentResolver();
 
     /**
-     * Return the Looper for the main thread of the current process.  This is
-     * the thread used to dispatch calls to application components (activities,
-     * services, etc).
+     * 返回当前进程的主线程的Looper，这是一个用来处理应用组件的回调的一个线程
      * <p>
-     * By definition, this method returns the same result as would be obtained
-     * by calling {@link Looper#getMainLooper() Looper.getMainLooper()}.
+     * 当然的，通过调用{@link Looper#getMainLooper() Looper.getMainLooper()}
+     * 将会返回和这个方法一样的结果
      * </p>
      *
      * @return The main looper.
@@ -338,13 +330,9 @@ public abstract class Context {
     public abstract Looper getMainLooper();
 
     /**
-     * Return the context of the single, global Application object of the
-     * current process.  This generally should only be used if you need a
-     * Context whose lifecycle is separate from the current context, that is
-     * tied to the lifetime of the process rather than the current component.
-     *
-     * <p>Consider for example how this interacts with
-     * {@link #registerReceiver(BroadcastReceiver, IntentFilter)}:
+     * 返回当前进程唯一的全局应用的context对象。这通常应该被用在当你需要一个context时，
+     * 它的生命周期与当前context分离，也就是被束缚于进程的生命周期而不是当前组件的生命周期
+     * <p>考虑这个例子它是怎样与{@link #registerReceiver(BroadcastReceiver, IntentFilter)}交互的:
      * <ul>
      * <li> <p>If used from an Activity context, the receiver is being registered
      * within that activity.  This means that you are expected to unregister
