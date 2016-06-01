@@ -334,20 +334,15 @@ public abstract class Context {
      * 它的生命周期与当前context分离，也就是被束缚于进程的生命周期而不是当前组件的生命周期
      * <p>考虑这个例子它是怎样与{@link #registerReceiver(BroadcastReceiver, IntentFilter)}交互的:
      * <ul>
-     * <li> <p>If used from an Activity context, the receiver is being registered
-     * within that activity.  This means that you are expected to unregister
-     * before the activity is done being destroyed; in fact if you do not do
-     * so, the framework will clean up your leaked registration as it removes
-     * the activity and log an error.  Thus, if you use the Activity context
-     * to register a receiver that is static (global to the process, not
-     * associated with an Activity instance) then that registration will be
-     * removed on you at whatever point the activity you used is destroyed.
-     * <li> <p>If used from the Context returned here, the receiver is being
-     * registered with the global state associated with your application.  Thus
-     * it will never be unregistered for you.  This is necessary if the receiver
-     * is associated with static data, not a particular component.  However
-     * using the ApplicationContext elsewhere can easily lead to serious leaks
-     * if you forget to unregister, unbind, etc.
+     * <li> <p>如果使用的是activity的context，这个接收器已经被activity注册了。
+     * 这意味着你期望在activity被销毁之前移除注册；事实上如果你不移除的话，这
+     * 个框架将会清除你的注册当销毁activity时并输出错误。因此，如果你使用activity
+     * 的context去注册一个接收器，它是静态的（整个进程，没有与activity实例关联），
+     * 这个注册将会被移除在你使用的activity销毁时。
+     * <li> <p>如果使用这里返回的context，这个接收器被注册时会与你的应用全局相关联
+     * 因此她将不会被销毁。如果这个接收器与静态数据相关联而不是一个具体
+     * 的组件的话它是十分必要的。然而，使用ApplicationContext时如果你忘了去自己注销，
+     * 解除绑定他也很容易导致严重的内存泄漏。
      * </ul>
      */
     public abstract Context getApplicationContext();
