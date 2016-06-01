@@ -24,9 +24,9 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
- * Denotes that a parameter, field or method return value can never be null.
+ * 表示参数、字段或方法的返回值不能为空
  * <p>
- * This is a marker annotation and it has no specific attributes.
+ * 这只是一个标记的注释，并没有特定的属性
  *
  * @hide
  */
