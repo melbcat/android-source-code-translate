@@ -95,6 +95,8 @@ public final class Console implements Flushable {
     /**
      * Reads a line from the console.
      *
+     * 从显示屏读取一行
+     *
      * @return the line, or null at EOF.
      */
     public String readLine() {
