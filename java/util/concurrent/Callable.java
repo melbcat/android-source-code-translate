@@ -7,30 +7,25 @@
 package java.util.concurrent;
 
 /**
- * A task that returns a result and may throw an exception.
- * Implementors define a single method with no arguments called
- * {@code call}.
+ * 可能会返回一个结果或是抛出一个异常的任务。实现者定义一个不带参数的方法 {@code call}
  *
- * <p>The {@code Callable} interface is similar to {@link
- * java.lang.Runnable}, in that both are designed for classes whose
- * instances are potentially executed by another thread.  A
- * {@code Runnable}, however, does not return a result and cannot
- * throw a checked exception.
+ * <p>{@code Callable} 接口和 {@link java.lang.Runnable} 很相似，因为
+ * 这两个类都被设计类的实例会在另一个线程中执行。然而 {@code Runnable} 
+ * 并没有返回一个结果或是抛出一个受检异常。
  *
- * <p>The {@link Executors} class contains utility methods to
- * convert from other common forms to {@code Callable} classes.
+ * <p>{@link Executors} 类包含了一些实用的方法从常见的形式转换到 {@code Callable} 类
  *
  * @see Executor
  * @since 1.5
  * @author Doug Lea
- * @param <V> the result type of method {@code call}
+ * @param <V> {@code call} 方法返回值结果的类型
  */
 public interface Callable<V> {
     /**
-     * Computes a result, or throws an exception if unable to do so.
+     * 计算结果，如果不能执行，则抛出一个异常
      *
-     * @return computed result
-     * @throws Exception if unable to compute a result
+     * @return 计算后的结果
+     * @throws 如果不能计算结果，抛出异常
      */
     V call() throws Exception;
 }
