@@ -7,19 +7,18 @@
 package java.util.concurrent;
 
 /**
- * A {@link Future} that is {@link Runnable}. Successful execution of
- * the {@code run} method causes completion of the {@code Future}
- * and allows access to its results.
+ * {@link Future} 就是 {@link Runnable}。{@code run} 方法的成功执行，
+ * {@code Future} 的完成并且允许得到它的结果。
+ * 
  * @see FutureTask
  * @see Executor
  * @since 1.6
  * @author Doug Lea
- * @param <V> The result type returned by this Future's {@code get} method
+ * @param <V> Future类的 {@code get} 方法返回值的类型
  */
 public interface RunnableFuture<V> extends Runnable, Future<V> {
     /**
-     * Sets this Future to the result of its computation
-     * unless it has been cancelled.
+     * 设置这个 Future 的计算结果，直到它已经被取消。
      */
     void run();
 }
