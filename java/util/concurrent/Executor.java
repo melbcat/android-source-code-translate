@@ -7,13 +7,10 @@
 package java.util.concurrent;
 
 /**
- * An object that executes submitted {@link Runnable} tasks. This
- * interface provides a way of decoupling task submission from the
- * mechanics of how each task will be run, including details of thread
- * use, scheduling, etc.  An {@code Executor} is normally used
- * instead of explicitly creating threads. For example, rather than
- * invoking {@code new Thread(new RunnableTask()).start()} for each
- * of a set of tasks, you might use:
+ * 可以执行被提交的 {@link Runnable} 任务的对象。这个接口提供了一种
+ * 解耦任务提交，每个任务如何运行的机制，包含线程的使用，时序安排等。
+ * {@code Executor} 通常被使用去替代显示的创建线程。例如：代替调用
+ * {@code new Thread(new RunnableTask()).start()} 为每一组任务，你可以使用：
  *
  * <pre>
  * Executor executor = <em>anExecutor</em>;
@@ -22,10 +19,8 @@ package java.util.concurrent;
  * ...
  * </pre>
  *
- * However, the {@code Executor} interface does not strictly
- * require that execution be asynchronous. In the simplest case, an
- * executor can run the submitted task immediately in the caller's
- * thread:
+ * 然而，{@code Executor} 接口并不严格要求执行是异步的。在最简单的情况下，
+ * executor 可以直接运行被提交的任务在调用者的线程中：
  *
  *  <pre> {@code
  * class DirectExecutor implements Executor {
@@ -34,9 +29,8 @@ package java.util.concurrent;
  *   }
  * }}</pre>
  *
- * More typically, tasks are executed in some thread other
- * than the caller's thread.  The executor below spawns a new thread
- * for each task.
+ * 最典型的，任务在不是调用者线程的那个线程中执行的。下面的 executor 为
+ * 每个任务生成一个新的线程。
  *
  *  <pre> {@code
  * class ThreadPerTaskExecutor implements Executor {
@@ -45,10 +39,9 @@ package java.util.concurrent;
  *   }
  * }}</pre>
  *
- * Many {@code Executor} implementations impose some sort of
- * limitation on how and when tasks are scheduled.  The executor below
- * serializes the submission of tasks to a second executor,
- * illustrating a composite executor.
+ * 许多的 {@code Executor} 实现中，对于任务如何执行、何时执行的安排
+ * 做了一些限制。下面 executor 连续提交的任务到了另一个executor，说明了一个
+ * 复合的 executor。
  *
  *  <pre> {@code
  * class SerialExecutor implements Executor {
@@ -82,16 +75,14 @@ package java.util.concurrent;
  *   }
  * }}</pre>
  *
- * The {@code Executor} implementations provided in this package
- * implement {@link ExecutorService}, which is a more extensive
- * interface.  The {@link ThreadPoolExecutor} class provides an
- * extensible thread pool implementation. The {@link Executors} class
- * provides convenient factory methods for these Executors.
+ * 这个包下的 {@link ExecutorService}是 {@code Executor} 的一个实现接口，
+ * 提供了更多扩展的接口。{@link ThreadPoolExecutor} 类提供了可扩展线程池。
+ * {@link Executors} 为这些 Executors 提供了方便的工程方法。
  *
- * <p>Memory consistency effects: Actions in a thread prior to
- * submitting a {@code Runnable} object to an {@code Executor}
+ * <p>Memory consistency effects: 在一个优先线程下，提交一个 {@code Runnable} 
+ * 对象到一个到 {@code Executor}，由于 
  * <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
- * its execution begins, perhaps in another thread.
+ * 的机制，也许它可能在另一个线程中执行。
  *
  * @since 1.5
  * @author Doug Lea
@@ -99,14 +90,12 @@ package java.util.concurrent;
 public interface Executor {
 
     /**
-     * Executes the given command at some time in the future.  The command
-     * may execute in a new thread, in a pooled thread, or in the calling
-     * thread, at the discretion of the {@code Executor} implementation.
+     * 执行在未来执行给定的命令。命令可能在一个新的线程、一个线程池或是
+     * 在调用线程中执行，主要裁决于 {@code Executor} 的判定。
      *
-     * @param command the runnable task
-     * @throws RejectedExecutionException if this task cannot be
-     * accepted for execution
-     * @throws NullPointerException if command is null
+     * @param 可运行的任务对象命令
+     * @throws RejectedExecutionException 如果这个任务并不能被执行
+     * @throws NullPointerException 如果任务命令为null
      */
     void execute(Runnable command);
 }

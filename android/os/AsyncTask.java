@@ -477,7 +477,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
      * 如果你真的想要并行执行，在{@link #THREAD_POOL_EXECUTOR} 下，你可以使用 {@link #executeOnExecutor} 方法；
      * 然而，看注释文档中的Warning部分。
      *
-     * <p>这个方法必须被调用子UI线程中
+     * <p>这个方法必须被调用在UI线程中
      *
      * @param params 任务的参数
      *
