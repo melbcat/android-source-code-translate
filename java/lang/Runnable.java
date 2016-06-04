@@ -19,15 +19,13 @@ package java.lang;
 
 
 /**
- * Represents a command that can be executed. Often used to run code in a
- * different {@link Thread}.
+ * 表示可以执行的命令。常常被使用在不同的 {@link Thread} 中去运行代码。
  */
 public interface Runnable {
 
     /**
-     * Starts executing the active part of the class' code. This method is
-     * called when a thread is started that has been created with a class which
-     * implements {@code Runnable}.
+     * 开始执行类的代码。当已经创建一个 {@code Runnable} 的实现类的线程被开始时，
+     * 这个方法被调用。
      */
     public void run();
 }
